@@ -11,86 +11,90 @@
 </head>
 
 <body>
-
-  <div class="information-bubble">
-    <h3>Estado del chat: 
-      <small id="status-online">online</small> 
-      <small id="status-offline">offline</small>  
-    </h3>
-
-    <h3>Personas conectadas</h3>
-    <ul>
-      <li>Fernando</li>
-      <li>Alberto</li>
-    </ul>
-  </div>
-
-
-  <!-- Ubicación del chat -->
-  <div class="bottom-right">
-
-
-    <!-- Chat -->
-    <div class="chat">
-
-      <!-- Información del contacto -->
-      <div class="contact bar">
-
-        <div class="pic stark"></div>
-
-        <div class="name">
-          Tony Stark
-        </div>
-        <div class="seen">
-          Hoy a las 12:56
-        </div>
-      </div>
-
-
-      <div class="messages" id="chat">
-
-        <!-- Mostrar tiempo -->
-        <div class="time">
-          Hoy a las 11:41
-        </div>
-
-        <!-- Mensajes de otros -->
-        <div class="message incoming">
-          Uh, what is this guy's problem, Mr. Stark? 🤔
-        </div>
-
-        <!-- Mis mensajes -->
-        <div class="message">
-          Uh, he's from space, he came here to steal a necklace from a wizard.
-        </div>
-
-
-        <!-- Burbujas mientras escribe -->
-        <div class="message stark">
-          <div class="typing typing-1"></div>
-          <div class="typing typing-2"></div>
-          <div class="typing typing-3"></div>
-        </div>
-
-
-      </div>
-
-
-
-      <!-- Inputs y Forms -->
-      <form class="input">
-        <input placeholder="Escribe tu mensaje aquí" type="text" />
-        <i class="fas fa-paper-plane"></i>
-      </form>
-
-
+  <div id="app">
+   
+    <div class="information-bubble">
+      <h3>Estado del chat: 
+        <small id="status-online" v-if="server_status === 'CONECTADO'">online</small> 
+        <small id="status-offline" v-else>offline</small>  
+      </h3>
+  
+      <h3>Jugadores conectadas</h3>
+      <ul v-for="(client, index) of clients" :key="index">
+        <li>{{client.name}}</li>
+        
+      </ul>
     </div>
+  
+  
+    <!-- Ubicación del chat -->
+    <div class="bottom-right">
+  
+  
+      <!-- Chat -->
+      <div class="chat">
+  
+        <!-- Información del contacto -->
+        <div class="contact bar">
+  
+          <div class="pic stark"></div>
+  
+          <div class="name">
+            Tony Stark
+          </div>
+          <div class="seen">
+            Hoy a las 12:56
+          </div>
+        </div>
+  
+  
+        <div class="messages" id="chat">
+  
+          <!-- Mostrar tiempo -->
+          <div class="time">
+            Hoy a las 11:41
+          </div>
+  
+          <!-- Mensajes de otros -->
+          <div class="message incoming">
+            Uh, what is this guy's problem, Mr. Stark? 🤔
+          </div>
+  
+          <!-- Mis mensajes -->
+          <div class="message">
+            Uh, he's from space, he came here to steal a necklace from a wizard.
+          </div>
+  
+  
+          <!-- Burbujas mientras escribe -->
+          <div class="message stark">
+            <div class="typing typing-1"></div>
+            <div class="typing typing-2"></div>
+            <div class="typing typing-3"></div>
+          </div>
+  
+  
+        </div>
+  
+  
+  
+        <!-- Inputs y Forms -->
+        <form class="input" @submit.prevent="sendMessage" >
+          <input placeholder="Escribe tu mensaje aquí" v-model="message_chat" type="text" />
+          <i class="fas fa-paper-plane"></i>
+        </form>
+  
+  
+      </div>
+    </div>
+
   </div>
 
 
 
   <!-- Scripts -->
   <script src="socket.io/socket.io.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="js/chat.js"></script>
 
 </body>
