@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chat personal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+
+  <div class="center">
+
+      <!-- Inputs y Forms -->
+      <form class="form" onsubmit="">
+        <input placeholder="Tu nombre" id="name" type="text" />
+        <input placeholder="Password" id="password" type="password" />
+        <button type="submit"> Ingresar </button>
+       </form>
+      
+
+
+    </div>
+  </div>
+
+
+  <script>
+
+    const form = document.querySelector('.form');
+    const input_name = document.querySelector('#name');
+    const input_password = document.querySelector('#password');
+
+    form.addEventListener( 'submit', (e) => {
+      e.preventDefault();
+      const name = input_name.value;
+      const password = input_password.value
+      console.log(name)
+      console.log(password)
+      if(password === '123456')
+      {
+          if ( name ) {
+            localStorage.setItem('name', name);
+            window.location.href = 'moderator.html';
+          }
+      }
+    })
+
+
+  </script>
+
+
+</body>
+
+</html>

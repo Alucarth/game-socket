@@ -5,12 +5,21 @@ createApp({
     const message_chat = ref('');
     const server_status = ref('');
     const username = localStorage.getItem('name');
-    const dialog = ref(false);
-    const question = ref({});
     const clients = ref([]);
+    const questions = ref([]);
     const sendMessage = () => {
       socket.emit('send-message', message_chat.value);
       message_chat.value = '';
+    };
+
+    const sendCommand = (message) => {
+      socket.emit('send-command', message);
+      console.log('enviando ', message);
+    };
+
+    const sendQuestion = (question) => {
+      socket.emit('send-question', question);
+      console.log('enviando question', question);
     };
 
     const renderMessage = (payload) => {
@@ -37,7 +46,7 @@ createApp({
       auth: {
         token: 'abc-123',
         name: username,
-        type: 'player',
+        type: 'moderator',
       },
     });
 
@@ -59,24 +68,24 @@ createApp({
       clients.value = data;
     });
 
+    socket.on('on-question-list', (data) => {
+      console.log('questions', data);
+      questions.value = data;
+    });
+
     socket.on('on-message', (data) => {
       console.log(data);
       renderMessage(data);
-    });
-
-    socket.on('on-open-question', (data) => {
-      console.log('open question', data);
-      question.value = data;
-      dialog.value = true;
     });
 
     return {
       message_chat,
       server_status,
       clients,
-      dialog,
-      question,
+      questions,
       sendMessage,
+      sendCommand,
+      sendQuestion,
     };
   },
 }).mount('#app');

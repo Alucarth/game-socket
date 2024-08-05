@@ -9,6 +9,7 @@ import { OnModuleInit } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 
 import { ChatService } from './chat.service';
+import { Question } from 'src/question/entities/question.entity';
 @WebSocketGateway()
 export class ChatGateway implements OnModuleInit {
   @WebSocketServer()
@@ -36,6 +37,8 @@ export class ChatGateway implements OnModuleInit {
 
       this.server.emit('on-clients-changed', this.chatService.getClients());
 
+      // this.server.emit('on-question-list', this.chatService.getQuestions());
+
       socket.on('disconnect', () => {
         console.log('CLIENTE DESCONECTADO');
         this.chatService.onClientDisconnected(socket.id);
@@ -62,5 +65,45 @@ export class ChatGateway implements OnModuleInit {
       message: message,
       name: name,
     });
+  }
+
+  @SubscribeMessage('send-command')
+  async sendCommand(
+    @MessageBody() message: string,
+    @ConnectedSocket() client: Socket,
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { name, token } = client.handshake.auth;
+    console.log({ name, message });
+
+    if (!message) {
+      return;
+    }
+
+    console.log('message', message);
+
+    const questions = await this.chatService.getQuestions();
+    this.server.emit('on-question-list', questions);
+  }
+
+  @SubscribeMessage('send-question')
+  async sendQuestion(
+    @MessageBody() question: Question,
+    @ConnectedSocket() client: Socket,
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { name, token } = client.handshake.auth;
+    console.log(question);
+    const response = await this.chatService.getQuestion(question.id);
+
+    this.server.emit('on-open-question', response);
+    // if (!message) {
+    //   return;
+    // }
+
+    // console.log('message', message);
+
+    // const questions = await this.chatService.getQuestions();
+    // this.server.emit('on-question-list', questions);
   }
 }

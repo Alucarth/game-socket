@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
   <title>Chat personal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  <!-- <link rel="stylesheet" href="css/styles.css"> -->
 
 </head>
 
@@ -26,67 +27,26 @@
       </ul>
     </div>
   
-  
-    <!-- Ubicación del chat -->
-    <div class="bottom-right">
-  
-  
-      <!-- Chat -->
-      <div class="chat">
-  
-        <!-- Información del contacto -->
-        <div class="contact bar">
-  
-          <div class="pic stark"></div>
-  
-          <div class="name">
-            Tony Stark
+    <div :class="dialog?'modal is-active':'modal'" >
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Responde la Pregunta</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+           <h2> {{ question?.question?.name }} </h2>
+        </section>
+        <footer class="modal-card-foot" v-if="question">
+          <div class="buttons" v-for="(option, index) of question.options" :key="index">
+            
+            <button class="button">{{ option.name}}</button>
           </div>
-          <div class="seen">
-            Hoy a las 12:56
-          </div>
-        </div>
-  
-  
-        <div class="messages" id="chat">
-  
-          <!-- Mostrar tiempo -->
-          <div class="time">
-            Hoy a las 11:41
-          </div>
-  
-          <!-- Mensajes de otros -->
-          <div class="message incoming">
-            Uh, what is this guy's problem, Mr. Stark? 🤔
-          </div>
-  
-          <!-- Mis mensajes -->
-          <div class="message">
-            Uh, he's from space, he came here to steal a necklace from a wizard.
-          </div>
-  
-  
-          <!-- Burbujas mientras escribe -->
-          <div class="message stark">
-            <div class="typing typing-1"></div>
-            <div class="typing typing-2"></div>
-            <div class="typing typing-3"></div>
-          </div>
-  
-  
-        </div>
-  
-  
-  
-        <!-- Inputs y Forms -->
-        <form class="input" @submit.prevent="sendMessage" >
-          <input placeholder="Escribe tu mensaje aquí" v-model="message_chat" type="text" />
-          <i class="fas fa-paper-plane"></i>
-        </form>
-  
-  
+        </footer>
       </div>
     </div>
+  
 
   </div>
 
