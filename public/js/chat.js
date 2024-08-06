@@ -5,6 +5,7 @@ createApp({
     const message_chat = ref('');
     const server_status = ref('');
     const username = localStorage.getItem('name');
+    const uuid = localStorage.getItem('uuid');
     const dialog = ref(false);
     const question = ref({});
     const clients = ref([]);
@@ -38,6 +39,7 @@ createApp({
         token: 'abc-123',
         name: username,
         type: 'player',
+        uuid: uuid,
       },
     });
 

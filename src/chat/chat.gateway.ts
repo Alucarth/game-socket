@@ -10,15 +10,19 @@ import { Server, Socket } from 'socket.io';
 
 import { ChatService } from './chat.service';
 import { Question } from 'src/question/entities/question.entity';
+import { UserService } from 'src/user/user.service';
 @WebSocketGateway()
 export class ChatGateway implements OnModuleInit {
   @WebSocketServer()
   public server: Server;
-  constructor(private readonly chatService: ChatService) {}
+  constructor(
+    private readonly chatService: ChatService,
+    private readonly userService: UserService,
+  ) {}
 
   onModuleInit() {
-    this.server.on('connection', (socket: Socket) => {
-      const { name, token } = socket.handshake.auth;
+    this.server.on('connection', async (socket: Socket) => {
+      const { name, token, uuid } = socket.handshake.auth;
 
       if (!name) {
         socket.disconnect();
@@ -26,9 +30,15 @@ export class ChatGateway implements OnModuleInit {
       }
 
       console.log('cliente conectado', socket.handshake.auth);
-      console.log({ name, token });
+      console.log({ name, token, uuid });
       console.log({ id: socket.id, name: name });
-      this.chatService.onClientConnected({ id: socket.id, name: name }); //TODO: donde id tiene que ser CI
+      const user = await this.userService.getUser({
+        id: 0,
+        name: name,
+        uuid: uuid,
+      });
+      console.log(user);
+      this.chatService.onClientConnected(user); //TODO: donde id tiene que ser CI
       // this.chatService.onClientConnected({
       //   id: 'Z51pFTG7LrhtoV_qAAAB',
       //   name: 'keyrus',

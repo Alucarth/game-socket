@@ -2,16 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from 'src/question/entities/question.entity';
 import { QuestionOption } from 'src/question/entities/question_option.entity';
+import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 
-interface Client {
-  id: string;
-  name: string;
-}
+// interface Client {
+//   id: string;
+//   name: string;
+// }
 
 @Injectable()
 export class ChatService {
-  private clients: Record<string, Client> = {};
+  private clients: Record<string, User> = {};
 
   constructor(
     @InjectRepository(Question)
@@ -20,12 +21,12 @@ export class ChatService {
     private questionOptionRepository: Repository<QuestionOption>,
   ) {}
 
-  onClientConnected(client: Client) {
-    this.clients[client.id] = client;
+  onClientConnected(client: User) {
+    this.clients[client.uuid] = client;
   }
 
-  onClientDisconnected(id: string) {
-    delete this.clients[id];
+  onClientDisconnected(uuid: string) {
+    delete this.clients[uuid];
   }
 
   getClients() {

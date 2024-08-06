@@ -17,7 +17,9 @@
 
       <!-- Inputs y Forms -->
       <form class="form" onsubmit="">
-        <input placeholder="Tu nombre" type="text" />
+        <input placeholder="Tu nombre" id="name" type="text" />
+        <input placeholder="Identificador" id="uuid" type="text" />
+        <button type="submit"> Ingresar </button>
       </form>
 
 
@@ -28,13 +30,17 @@
   <script>
 
     const form = document.querySelector('.form');
-    const input = document.querySelector('input');
+    const input_name = document.querySelector('#name');
+    const input_uuid = document.querySelector('#uuid');
+
 
     form.addEventListener( 'submit', (e) => {
       e.preventDefault();
-      const name = input.value;
+      const name = input_name.value;
+      const uuid = input_uuid.value;
       if ( name ) {
         localStorage.setItem('name', name);
+        localStorage.setItem('uuid', uuid)
         window.location.href = 'chat.html';
       }
     })
