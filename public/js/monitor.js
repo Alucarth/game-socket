@@ -1,12 +1,12 @@
-const { createApp, ref } = Vue;
+const { createApp, ref, onMounted } = Vue;
 
 createApp({
   setup() {
     const message_chat = ref('');
     const server_status = ref('');
-    const username = localStorage.getItem('name');
+    // const username = localStorage.getItem('name');
     const clients = ref([]);
-    const questions = ref([]);
+    // const questions = ref([]);
     const sendMessage = () => {
       socket.emit('send-message', message_chat.value);
       message_chat.value = '';
@@ -36,17 +36,17 @@ createApp({
       chatElement.scrollTop = chatElement.scrollHeight;
     };
 
-    if (!username) {
-      window.location.replace('/');
-      throw new Error('username is required');
-    }
+    // if (!username) {
+    //   window.location.replace('/');
+    //   throw new Error('username is required');
+    // }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const socket = io({
       auth: {
         token: 'abc-123',
-        name: username,
-        type: 'moderator',
+        name: 'monitor',
+        type: 'monitor',
         uuid: 0,
       },
     });
@@ -66,24 +66,28 @@ createApp({
     });
 
     socket.on('on-clients-changed', (data) => {
+      console.log('data', data);
       clients.value = data;
     });
 
-    socket.on('on-question-list', (data) => {
-      console.log('questions', data);
-      questions.value = data;
-    });
+    // socket.on('on-question-list', (data) => {
+    //   console.log('questions', data);
+    //   questions.value = data;
+    // });
 
     socket.on('on-message', (data) => {
       console.log(data);
       renderMessage(data);
     });
 
+    onMounted(() => {
+      console.log('cargando monitor');
+    });
+
     return {
       message_chat,
       server_status,
       clients,
-      questions,
       sendMessage,
       sendCommand,
       sendQuestion,

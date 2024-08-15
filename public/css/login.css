@@ -1,0 +1,68 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+
+.login-container{
+	width: 100%;
+	margin: 100px;
+	background: green;
+	display: flex;
+
+}
+.imgage-logo{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.imgage-logo img{
+	width: 600px;
+}
+
+.input-box{
+	width: 100%;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+/* @media (max-width: 768px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-container h1 {
+        font-size: 1.5em;
+    }
+
+    .input-box {
+        margin-bottom: 20px;
+    }
+
+    .input-box input,
+    .btn {
+        font-size: 14px;
+    }
+} */

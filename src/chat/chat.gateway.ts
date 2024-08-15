@@ -22,7 +22,7 @@ export class ChatGateway implements OnModuleInit {
 
   onModuleInit() {
     this.server.on('connection', async (socket: Socket) => {
-      const { name, token, uuid } = socket.handshake.auth;
+      const { name, token, uuid, type } = socket.handshake.auth;
 
       if (!name) {
         socket.disconnect();
@@ -30,15 +30,23 @@ export class ChatGateway implements OnModuleInit {
       }
 
       console.log('cliente conectado', socket.handshake.auth);
-      console.log({ name, token, uuid });
-      console.log({ id: socket.id, name: name });
+      console.log({ name, token, uuid, type });
+      console.log({ id: socket.id, name: name, type: type });
       const user = await this.userService.getUser({
         id: 0,
         name: name,
         uuid: uuid,
+        type: type,
       });
       console.log(user);
-      this.chatService.onClientConnected(user); //TODO: donde id tiene que ser CI
+      if (type === 'player') {
+        if (this.chatService.getClientsPlayers().length < 4) {
+          this.chatService.onClientConnected(user); //TODO: donde id tiene que ser CI
+        } else {
+          socket.emit('server-full', 'Jugadores Completos por favor espere');
+        }
+      }
+      // this.chatService.onClientConnected(user); //TODO: donde id tiene que ser CI
       // this.chatService.onClientConnected({
       //   id: 'Z51pFTG7LrhtoV_qAAAB',
       //   name: 'keyrus',
@@ -51,7 +59,8 @@ export class ChatGateway implements OnModuleInit {
 
       socket.on('disconnect', () => {
         console.log('CLIENTE DESCONECTADO');
-        this.chatService.onClientDisconnected(socket.id);
+        const { uuid } = socket.handshake.auth;
+        this.chatService.onClientDisconnected(uuid);
         this.server.emit('on-clients-changed', this.chatService.getClients());
       });
     });

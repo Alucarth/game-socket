@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chat personal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  <!-- <link rel="stylesheet" href="css/styles.css"> -->
+
+</head>
+
+<body >
+  <div id="app">
+   
+    <div class="content m-4"  >
+
+        <div class="columns is-desktop ">
+            <div class="column">
+                <div class="information-bubble">
+                    <h3>Estado del chat: 
+                      <small id="status-online" v-if="server_status === 'CONECTADO'">online</small> 
+                      <small id="status-offline" v-else>offline</small>  
+                    </h3>
+                
+                    <h3>Jugadores Conectados</h3>
+                    <ul v-for="(client, index) of clients" :key="index">
+                      <li v-if="client.type==='player'">{{client.name}}</li>
+                      
+                    </ul>
+                  </div>
+            
+            </div>
+            
+         
+            
+        </div>
+
+      
+
+    </div>
+
+    
+  
+   
+  </div>
+
+
+
+  <!-- Scripts -->
+  <script src="socket.io/socket.io.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="js/monitor.js"></script>
+
+</body>
+
+</html>

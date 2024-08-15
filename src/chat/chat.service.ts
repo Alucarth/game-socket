@@ -27,10 +27,22 @@ export class ChatService {
 
   onClientDisconnected(uuid: string) {
     delete this.clients[uuid];
+    console.log('uuid disconected', uuid);
   }
 
   getClients() {
     return Object.values(this.clients);
+  }
+
+  getClientsPlayers() {
+    const list = Object.values(this.clients);
+    const client_list = [];
+    list.forEach((client) => {
+      if (client.type === 'player') {
+        client_list.push(client);
+      }
+    });
+    return client_list;
   }
 
   async getQuestions() {
