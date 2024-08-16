@@ -7,6 +7,7 @@ createApp({
     const username = localStorage.getItem('name');
     const uuid = localStorage.getItem('uuid');
     const dialog = ref(false);
+    const index_avatar = ref(0);
     const question = ref({});
     const clients = ref([]);
     const sendMessage = () => {
@@ -59,6 +60,11 @@ createApp({
 
     socket.on('on-clients-changed', (data) => {
       clients.value = data;
+      clients.value.forEach((client, index) => {
+        if (client.uuid === uuid) {
+          index_avatar.value = index + 1;
+        }
+      });
     });
 
     socket.on('on-message', (data) => {
@@ -77,7 +83,9 @@ createApp({
       server_status,
       clients,
       dialog,
+      index_avatar,
       question,
+      username,
       sendMessage,
     };
   },

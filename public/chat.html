@@ -7,24 +7,67 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-  <!-- <link rel="stylesheet" href="css/styles.css"> -->
+  <link rel="stylesheet" href="css/player.css">
 
 </head>
 
 <body>
-  <div id="app">
-   
+  <div id="app" class="kmain-container">
+    
+    <div class="kheader">
+
+      <div class="avatar-container">
+          <div class="avatar">
+              <img :src="`/img/${index_avatar}.png`" alt="Player Avatar">
+          </div>
+          <div class="player-info">
+              <div class="player-name">{{ username }}</div>
+              <div class="player-score">Score: <span id="score">1000</span></div>
+          </div>
+      </div>
+      <div class="ksub-header">
+        <div class="oponents">
+          <div v-for="(client, index) of clients" :key="index "> 
+            <div class="avatar-container" v-if="client.name !== username"  >
+                <div class="avatar" >
+                    <img :src="`/img/${index+1}.png`" alt="Player Avatar">
+                </div>
+                <div class="player-info" >
+                    <div class="player-name">{{ client.name }}</div>
+                    <div class="player-score">Score: <span id="score">1000</span></div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+
+          <img src="/img/logo_eba.png" style="width: 200px;" alt="">
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="kbody">
+      aqui conten
+
+    </div>
+    
+    <div class="kfooter">
+      <img src="/img/fexpo.png" style="width: 500px;" alt="">
+      <img src="/img/karissa_logo.png" style="width: 400px;" alt="">
+    </div>
     <div class="information-bubble">
       <h3>Estado del chat: 
         <small id="status-online" v-if="server_status === 'CONECTADO'">online</small> 
         <small id="status-offline" v-else>offline</small>  
       </h3>
   
-      <h3>Jugadores conectadas</h3>
+      <!-- <h3>Jugadores conectadas</h3>
       <ul v-for="(client, index) of clients" :key="index">
         <li>{{client.name}}</li>
         
-      </ul>
+      </ul> -->
     </div>
   
     <div :class="dialog?'modal is-active':'modal'" >

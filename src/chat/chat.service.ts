@@ -9,20 +9,39 @@ import { Repository } from 'typeorm';
 //   id: string;
 //   name: string;
 // }
+// interface Avatar{
+//   uuid: string;
+//   name: string;
+// }
 
 @Injectable()
 export class ChatService {
   private clients: Record<string, User> = {};
-
+  // private avatars: Record<string, Avatar> = {};
   constructor(
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
     @InjectRepository(QuestionOption)
     private questionOptionRepository: Repository<QuestionOption>,
-  ) {}
+  ) {
+    // let avatar: Avatar;
+    // avatar.uuid = '';
+    // avatar.name = 'LACTEOS';
+    // this.avatars[avatar.uuid] = avatar;
+    // avatar.uuid = '';
+    // avatar.name = 'ALMENDRA';
+    // this.avatars[avatar.uuid] = avatar;
+    // avatar.uuid = '';
+    // avatar.name = 'NECTARES';
+    // this.avatars[avatar.uuid] = avatar;
+    // avatar.uuid = '';
+    // avatar.name = 'APICOLA';
+    // this.avatars[avatar.uuid] = avatar;
+  }
 
   onClientConnected(client: User) {
     this.clients[client.uuid] = client;
+    // let disponible = Object.entries(this.avatars).find( ([name,])=> o.uuid  === ''))
   }
 
   onClientDisconnected(uuid: string) {
@@ -31,6 +50,8 @@ export class ChatService {
   }
 
   getClients() {
+    // const list = Object.values(this.clients);
+
     return Object.values(this.clients);
   }
 

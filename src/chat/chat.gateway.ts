@@ -51,7 +51,7 @@ export class ChatGateway implements OnModuleInit {
       //   id: 'Z51pFTG7LrhtoV_qAAAB',
       //   name: 'keyrus',
       // });
-      socket.emit('welcome-service', 'Bienvenido al Servidor');
+      socket.emit('welcome-service', user);
 
       this.server.emit('on-clients-changed', this.chatService.getClients());
 
