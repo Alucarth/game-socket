@@ -11,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { Question } from 'src/question/entities/question.entity';
 import { UserService } from 'src/user/user.service';
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class ChatGateway implements OnModuleInit {
   @WebSocketServer()
   public server: Server;
