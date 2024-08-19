@@ -9,34 +9,49 @@ import { Repository } from 'typeorm';
 //   id: string;
 //   name: string;
 // }
-// interface Avatar{
-//   uuid: string;
-//   name: string;
-// }
+export interface Avatar {
+  uuid: string;
+  name: string;
+  path: string;
+}
 
 @Injectable()
 export class ChatService {
   private clients: Record<string, User> = {};
-  // private avatars: Record<string, Avatar> = {};
+  private avatars: Record<string, Avatar> = {};
   constructor(
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
     @InjectRepository(QuestionOption)
     private questionOptionRepository: Repository<QuestionOption>,
   ) {
-    // let avatar: Avatar;
-    // avatar.uuid = '';
-    // avatar.name = 'LACTEOS';
-    // this.avatars[avatar.uuid] = avatar;
-    // avatar.uuid = '';
-    // avatar.name = 'ALMENDRA';
-    // this.avatars[avatar.uuid] = avatar;
-    // avatar.uuid = '';
-    // avatar.name = 'NECTARES';
-    // this.avatars[avatar.uuid] = avatar;
-    // avatar.uuid = '';
-    // avatar.name = 'APICOLA';
-    // this.avatars[avatar.uuid] = avatar;
+    const lacteos: Avatar = {
+      uuid: '',
+      name: 'LACTEOS',
+      path: '1.png',
+    };
+    this.avatars[lacteos.name] = lacteos;
+
+    const almendra: Avatar = {
+      uuid: '',
+      name: 'ALMENDRA',
+      path: '2.png',
+    };
+    this.avatars[almendra.name] = almendra;
+
+    const nectares: Avatar = {
+      uuid: '',
+      name: 'NECTARES',
+      path: '3.png',
+    };
+    this.avatars[nectares.name] = nectares;
+
+    const apicola: Avatar = {
+      uuid: '',
+      name: 'APICOLA',
+      path: '4.png',
+    };
+    this.avatars[apicola.name] = apicola;
   }
 
   onClientConnected(client: User) {
@@ -53,6 +68,25 @@ export class ChatService {
     // const list = Object.values(this.clients);
 
     return Object.values(this.clients);
+  }
+
+  getAvatars() {
+    return Object.values(this.avatars);
+  }
+
+  setAvatar(avatar: Avatar) {
+    this.avatars[avatar.name] = avatar;
+  }
+
+  clearAvatar(uuid: string) {
+    const lista = this.getAvatars();
+
+    lista.map((avatar) => {
+      if (avatar.uuid === uuid) {
+        avatar.uuid = '';
+        this.avatars[avatar.name] = avatar;
+      }
+    });
   }
 
   getClientsPlayers() {
