@@ -10,7 +10,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: game_db
+      POSTGRES_DB: game1_db
     depends_on:
       - db
 
@@ -21,7 +21,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: game_db
+      POSTGRES_DB: game1_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
