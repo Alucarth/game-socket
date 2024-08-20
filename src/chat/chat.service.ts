@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from 'src/question/entities/question.entity';
 import { QuestionOption } from 'src/question/entities/question_option.entity';
 import { User } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 
 // interface Client {
@@ -10,7 +11,7 @@ import { Repository } from 'typeorm';
 //   name: string;
 // }
 export interface Avatar {
-  uuid: string;
+  id: number;
   name: string;
   path: string;
 }
@@ -24,30 +25,31 @@ export class ChatService {
     private questionRepository: Repository<Question>,
     @InjectRepository(QuestionOption)
     private questionOptionRepository: Repository<QuestionOption>,
+    private readonly userService: UserService,
   ) {
     const lacteos: Avatar = {
-      uuid: '',
+      id: 1,
       name: 'LACTEOS',
       path: '1.png',
     };
     this.avatars[lacteos.name] = lacteos;
 
     const almendra: Avatar = {
-      uuid: '',
+      id: 2,
       name: 'ALMENDRA',
       path: '2.png',
     };
     this.avatars[almendra.name] = almendra;
 
     const nectares: Avatar = {
-      uuid: '',
+      id: 3,
       name: 'NECTARES',
       path: '3.png',
     };
     this.avatars[nectares.name] = nectares;
 
     const apicola: Avatar = {
-      uuid: '',
+      id: 4,
       name: 'APICOLA',
       path: '4.png',
     };
@@ -65,8 +67,6 @@ export class ChatService {
   }
 
   getClients() {
-    // const list = Object.values(this.clients);
-
     return Object.values(this.clients);
   }
 
@@ -74,20 +74,34 @@ export class ChatService {
     return Object.values(this.avatars);
   }
 
-  setAvatar(avatar: Avatar) {
-    this.avatars[avatar.name] = avatar;
+  async updateClients() {
+    const list = Object.values(this.clients);
+    await Promise.all(
+      list.map(async (client) => {
+        const user = await this.userService.findByUUID(client.uuid);
+        this.clients[user.uuid] = user;
+      }),
+    );
   }
 
-  clearAvatar(uuid: string) {
-    const lista = this.getAvatars();
+  // setAvatar(avatar: Avatar) {
+  //   console.log('seteando avagtar', avatar);
+  //   // console.log('uuid ', uuid);
+  //   // avatar.uuid = uuid;
+  //   // this.avatars[avatar.name] = avatar;
+  //   console.log(this.avatars);
+  // }
 
-    lista.map((avatar) => {
-      if (avatar.uuid === uuid) {
-        avatar.uuid = '';
-        this.avatars[avatar.name] = avatar;
-      }
-    });
-  }
+  // clearAvatar(uuid: string) {
+  //   const lista = this.getAvatars();
+
+  //   // lista.map((avatar) => {
+  //   //   if (avatar.uuid === uuid) {
+  //   //     avatar.uuid = '';
+  //   //     this.avatars[avatar.name] = avatar;
+  //   //   }
+  //   // });
+  // }
 
   getClientsPlayers() {
     const list = Object.values(this.clients);

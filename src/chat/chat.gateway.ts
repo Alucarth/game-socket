@@ -37,6 +37,7 @@ export class ChatGateway implements OnModuleInit {
         name: name,
         uuid: uuid,
         type: type,
+        avatar_id: null,
       });
       console.log(user);
       if (type === 'player') {
@@ -46,11 +47,7 @@ export class ChatGateway implements OnModuleInit {
           socket.emit('server-full', 'Jugadores Completos por favor espere');
         }
       }
-      // this.chatService.onClientConnected(user); //TODO: donde id tiene que ser CI
-      // this.chatService.onClientConnected({
-      //   id: 'Z51pFTG7LrhtoV_qAAAB',
-      //   name: 'keyrus',
-      // });
+
       socket.emit('welcome-service', user);
 
       this.server.emit('on-clients-changed', this.chatService.getClients());
@@ -59,10 +56,13 @@ export class ChatGateway implements OnModuleInit {
 
       // this.server.emit('on-question-list', this.chatService.getQuestions());
 
-      socket.on('disconnect', () => {
+      socket.on('disconnect', async () => {
         console.log('CLIENTE DESCONECTADO');
         const { uuid } = socket.handshake.auth;
         this.chatService.onClientDisconnected(uuid);
+        this.userService.clearAvatar(uuid);
+        // this.chatService.clearAvatar(uuid);
+        await this.chatService.updateClients();
         this.server.emit('on-clients-changed', this.chatService.getClients());
       });
     });
@@ -93,12 +93,20 @@ export class ChatGateway implements OnModuleInit {
     @MessageBody() avatar: Avatar,
     @ConnectedSocket() client: Socket,
   ) {
-    const { name, uuid } = client.handshake.auth;
-    console.log('name', name);
-    avatar.uuid = uuid;
-    this.chatService.setAvatar(avatar);
-    this.server.emit('on-avatars-changed', this.chatService.getAvatars());
-    console.log('set avatar ', avatar);
+    console.log('set avatar', avatar);
+    const { uuid } = client.handshake.auth;
+    console.log('auth', client.handshake.auth);
+    const user = await this.userService.setAvatar(uuid, avatar.id);
+    client.emit('welcome-service', user);
+    // this.chatService.onClientConnected(user);
+    //aqui solo deberia actualizar al mio
+    await this.chatService.updateClients();
+    this.server.emit('on-clients-changed', this.chatService.getClients());
+    // const new_avatar = Object.assign({}, avatar);
+    // // new_avatar.uuid = uuid;
+    // this.chatService.setAvatar(new_avatar);
+    // this.server.emit('on-avatars-changed', this.chatService.getAvatars());
+    // console.log('set avatar ', new_avatar);
   }
 
   @SubscribeMessage('send-command')

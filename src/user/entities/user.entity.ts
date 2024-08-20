@@ -13,4 +13,7 @@ export class User {
 
   @Column()
   type: string;
+
+  @Column({ nullable: true })
+  avatar_id: number;
 }
