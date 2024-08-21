@@ -9,6 +9,8 @@ import { DatabaseModule } from './database/database.module';
 import { EventModule } from './event/event.module';
 import { UserModule } from './user/user.module';
 import { ResultModule } from './result/result.module';
+import { RoundModule } from './round/round.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { ResultModule } from './result/result.module';
     EventModule,
     UserModule,
     ResultModule,
+    RoundModule,
+    AnswerModule,
   ],
 })
 export class AppModule {}

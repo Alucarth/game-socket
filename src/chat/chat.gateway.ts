@@ -8,9 +8,11 @@ import {
 import { OnModuleInit } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 
-import { Avatar, ChatService } from './chat.service';
+import { AnswerInterface, Avatar, ChatService } from './chat.service';
 import { Question } from 'src/question/entities/question.entity';
 import { UserService } from 'src/user/user.service';
+import { AnswerService } from 'src/answer/answer.service';
+import { RoundService } from 'src/round/round.service';
 @WebSocketGateway({ cors: true })
 export class ChatGateway implements OnModuleInit {
   @WebSocketServer()
@@ -18,6 +20,8 @@ export class ChatGateway implements OnModuleInit {
   constructor(
     private readonly chatService: ChatService,
     private readonly userService: UserService,
+    private readonly answerService: AnswerService,
+    private readonly roundService: RoundService,
   ) {}
 
   onModuleInit() {
@@ -88,6 +92,29 @@ export class ChatGateway implements OnModuleInit {
     });
   }
 
+  @SubscribeMessage('send-answer')
+  async sendAnsware(
+    @MessageBody() answer: AnswerInterface,
+    @ConnectedSocket() client: Socket,
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { name, token } = client.handshake.auth;
+    // console.log({ name, message });
+
+    if (!answer) {
+      return;
+    }
+    //registrar respuesta
+    const result = await this.answerService.createAnswer(answer);
+
+    client.emit('send-message', result);
+    // this.server.emit('on-message', {
+    //   userId: client.id,
+    //   message: message,
+    //   name: name,
+    // });
+  }
+
   @SubscribeMessage('set-avatar')
   async setAvatar(
     @MessageBody() avatar: Avatar,
@@ -124,6 +151,11 @@ export class ChatGateway implements OnModuleInit {
 
     console.log('message', message);
 
+    //aqqui colocar la ronda id
+    const round = await this.roundService.createRound();
+    console.log('round', round);
+    this.server.emit('on-round', round);
+
     const questions = await this.chatService.getQuestions();
     this.server.emit('on-question-list', questions);
   }
@@ -139,13 +171,5 @@ export class ChatGateway implements OnModuleInit {
     const response = await this.chatService.getQuestion(question.id);
 
     this.server.emit('on-open-question', response);
-    // if (!message) {
-    //   return;
-    // }
-
-    // console.log('message', message);
-
-    // const questions = await this.chatService.getQuestions();
-    // this.server.emit('on-question-list', questions);
   }
 }

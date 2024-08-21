@@ -16,6 +16,15 @@ export interface Avatar {
   path: string;
 }
 
+export interface AnswerInterface {
+  round_id: number;
+  user_id: number;
+  question_id: number;
+  question_option_id: number;
+  question_score: number;
+  is_correct: boolean;
+}
+
 @Injectable()
 export class ChatService {
   private clients: Record<string, User> = {};
