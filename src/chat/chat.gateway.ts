@@ -65,6 +65,9 @@ export class ChatGateway implements OnModuleInit {
 
       this.server.emit('on-avatars-changed', this.chatService.getAvatars());
 
+      const round = await this.roundService.getLast();
+      this.server.emit('on-round', round);
+
       // this.server.emit('on-question-list', this.chatService.getQuestions());
 
       socket.on('disconnect', async () => {
