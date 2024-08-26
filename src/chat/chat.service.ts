@@ -25,6 +25,12 @@ export interface AnswerInterface {
   is_correct: boolean;
 }
 
+export interface RoundQuestionInferface {
+  round_id: number;
+  question_id: number;
+  index: number;
+}
+
 @Injectable()
 export class ChatService {
   private clients: Record<string, User> = {};

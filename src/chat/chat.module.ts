@@ -8,6 +8,7 @@ import { UserModule } from 'src/user/user.module';
 
 import { RoundModule } from 'src/round/round.module';
 import { AnswerModule } from 'src/answer/answer.module';
+import { RoundQuestionModule } from 'src/round_question/round_question.module';
 
 @Module({
   providers: [ChatGateway, ChatService],
@@ -16,6 +17,7 @@ import { AnswerModule } from 'src/answer/answer.module';
     UserModule,
     RoundModule,
     AnswerModule,
+    RoundQuestionModule,
   ],
 })
 export class ChatModule {}

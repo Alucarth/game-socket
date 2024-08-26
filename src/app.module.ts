@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { ResultModule } from './result/result.module';
 import { RoundModule } from './round/round.module';
 import { AnswerModule } from './answer/answer.module';
+import { RoundQuestionModule } from './round_question/round_question.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AnswerModule } from './answer/answer.module';
     ResultModule,
     RoundModule,
     AnswerModule,
+    RoundQuestionModule,
   ],
 })
 export class AppModule {}

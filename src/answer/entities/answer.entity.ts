@@ -28,6 +28,9 @@ export class Answer {
   @Column()
   score: number;
 
+  @Column()
+  index: number;
+
   @CreateDateColumn()
   created_at: Date; // Creation date
 }
