@@ -1,4 +1,4 @@
-FROM node:latest as builder
+FROM node:18-alpine
 
 WORKDIR /usr/src/app
 
@@ -10,13 +10,16 @@ COPY . .
 
 RUN npm run build
 
+# Instalar PM2 globalmente
+RUN npm install pm2 -g
+
 # Stage 2: Setup the production environment
-FROM node:alpine
+# FROM node:alpine
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+# COPY --from=builder /usr/src/app/dist ./dist
+# COPY --from=builder /usr/src/app/node_modules ./node_modules
 # Add a .env file to your Dockerfile during the build process
 COPY .env /usr/src/app/.env
 
@@ -24,5 +27,5 @@ COPY .env /usr/src/app/.env
 ENV PORT=3000
 
 EXPOSE 3000
-
-CMD [ "node", "dist/main"]
+CMD ["pm2-runtime", "start", "dist/main.js"]
+# CMD [ "node", "dist/main"]
