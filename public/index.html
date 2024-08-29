@@ -24,8 +24,12 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				
-
-				<form class="login100-form form" onsubmit="">
+				<div  class="login100-form form">
+					<span class="login100-form-title">
+						<img src="/img/karissa_logo.png" style="width: 500px;" alt="">
+					</span>
+				</div>
+				<!-- <form class="login100-form form" onsubmit="">
 					<span class="login100-form-title">
 						<img src="/img/logo_eba.png" style="width: 500px;" alt="">
 					</span>
@@ -60,7 +64,7 @@
             			<img src="/img/fexpo.png" style="width: 500px;" alt="">
 						<img src="/img/karissa_logo.png" style="width: 400px;" alt="">
 					</div>
-				</form>
+				</form> -->
 			</div>
 		</div>
 	</div>
@@ -70,21 +74,21 @@
 
   <script>
 
-    const form = document.querySelector('.form');
-    const input_name = document.querySelector('#name');
-    const input_uuid = document.querySelector('#uuid');
+    // const form = document.querySelector('.form');
+    // const input_name = document.querySelector('#name');
+    // const input_uuid = document.querySelector('#uuid');
 
 
-    form.addEventListener( 'submit', (e) => {
-      e.preventDefault();
-      const name = input_name.value;
-      const uuid = input_uuid.value;
-      if ( name ) {
-        localStorage.setItem('name', name);
-        localStorage.setItem('uuid', uuid)
-        window.location.href = 'chat.html';
-      }
-    })
+    // form.addEventListener( 'submit', (e) => {
+    //   e.preventDefault();
+    //   const name = input_name.value;
+    //   const uuid = input_uuid.value;
+    //   if ( name ) {
+    //     localStorage.setItem('name', name);
+    //     localStorage.setItem('uuid', uuid)
+    //     window.location.href = 'chat.html';
+    //   }
+    // })
 
 
   </script>
