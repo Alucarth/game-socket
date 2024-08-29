@@ -69,6 +69,48 @@ export class ChatService {
       path: '4.png',
     };
     this.avatars[apicola.name] = apicola;
+
+    const personaje6: Avatar = {
+      id: 6,
+      name: 'personaje6',
+      path: '6.png',
+    };
+    this.avatars[personaje6.name] = personaje6;
+
+    const personaje7: Avatar = {
+      id: 7,
+      name: 'personaje7',
+      path: '7.png',
+    };
+    this.avatars[personaje7.name] = personaje7;
+
+    const personaje8: Avatar = {
+      id: 8,
+      name: 'personaje8',
+      path: '8.png',
+    };
+    this.avatars[personaje8.name] = personaje8;
+
+    const personaje9: Avatar = {
+      id: 9,
+      name: 'personaje9',
+      path: '9.png',
+    };
+    this.avatars[personaje9.name] = personaje9;
+
+    const personaje10: Avatar = {
+      id: 10,
+      name: 'personaje10',
+      path: '10.png',
+    };
+    this.avatars[personaje10.name] = personaje10;
+
+    const personaje11: Avatar = {
+      id: 11,
+      name: 'personaje11',
+      path: '11.png',
+    };
+    this.avatars[personaje11.name] = personaje11;
   }
 
   onClientConnected(client: User) {

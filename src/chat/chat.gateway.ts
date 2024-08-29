@@ -52,7 +52,7 @@ export class ChatGateway implements OnModuleInit {
       });
       console.log(user);
       if (type === 'player') {
-        if (this.chatService.getClientsPlayers().length < 4) {
+        if (this.chatService.getClientsPlayers().length <= 5) {
           this.chatService.onClientConnected(user); //TODO: donde id tiene que ser CI
         } else {
           socket.emit('server-full', 'Jugadores Completos por favor espere');
