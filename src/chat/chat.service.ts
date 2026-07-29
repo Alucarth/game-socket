@@ -44,73 +44,73 @@ export class ChatService {
   ) {
     const lacteos: Avatar = {
       id: 1,
-      name: 'LACTEOS',
+      name: 'MECATOR',
       path: '1.png',
     };
     this.avatars[lacteos.name] = lacteos;
 
     const almendra: Avatar = {
       id: 2,
-      name: 'ALMENDRA',
+      name: 'LUNA',
       path: '2.png',
     };
     this.avatars[almendra.name] = almendra;
 
     const nectares: Avatar = {
       id: 3,
-      name: 'NECTARES',
+      name: 'LEXA',
       path: '3.png',
     };
     this.avatars[nectares.name] = nectares;
 
     const apicola: Avatar = {
       id: 4,
-      name: 'APICOLA',
+      name: 'CHEF IGNIS',
       path: '4.png',
     };
     this.avatars[apicola.name] = apicola;
 
     const personaje6: Avatar = {
       id: 6,
-      name: 'personaje6',
+      name: 'BYTE',
       path: '6.png',
     };
     this.avatars[personaje6.name] = personaje6;
 
-    const personaje7: Avatar = {
-      id: 7,
-      name: 'personaje7',
-      path: '7.png',
-    };
-    this.avatars[personaje7.name] = personaje7;
+    // const personaje7: Avatar = {
+    //   id: 7,
+    //   name: 'personaje7',
+    //   path: '7.png',
+    // };
+    // this.avatars[personaje7.name] = personaje7;
 
-    const personaje8: Avatar = {
-      id: 8,
-      name: 'personaje8',
-      path: '8.png',
-    };
-    this.avatars[personaje8.name] = personaje8;
+    // const personaje8: Avatar = {
+    //   id: 8,
+    //   name: 'personaje8',
+    //   path: '8.png',
+    // };
+    // this.avatars[personaje8.name] = personaje8;
 
-    const personaje9: Avatar = {
-      id: 9,
-      name: 'personaje9',
-      path: '9.png',
-    };
-    this.avatars[personaje9.name] = personaje9;
+    // const personaje9: Avatar = {
+    //   id: 9,
+    //   name: 'personaje9',
+    //   path: '9.png',
+    // };
+    // this.avatars[personaje9.name] = personaje9;
 
-    const personaje10: Avatar = {
-      id: 10,
-      name: 'personaje10',
-      path: '10.png',
-    };
-    this.avatars[personaje10.name] = personaje10;
+    // const personaje10: Avatar = {
+    //   id: 10,
+    //   name: 'personaje10',
+    //   path: '10.png',
+    // };
+    // this.avatars[personaje10.name] = personaje10;
 
-    const personaje11: Avatar = {
-      id: 11,
-      name: 'personaje11',
-      path: '11.png',
-    };
-    this.avatars[personaje11.name] = personaje11;
+    // const personaje11: Avatar = {
+    //   id: 11,
+    //   name: 'personaje11',
+    //   path: '11.png',
+    // };
+    // this.avatars[personaje11.name] = personaje11;
   }
 
   onClientConnected(client: User) {
