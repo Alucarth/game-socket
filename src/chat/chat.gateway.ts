@@ -75,8 +75,6 @@ export class ChatGateway implements OnModuleInit {
         const { uuid } = socket.handshake.auth;
         this.chatService.onClientDisconnected(uuid);
         this.userService.clearAvatar(uuid);
-        // this.chatService.clearAvatar(uuid);
-        await this.chatService.updateClients();
         this.server.emit('on-clients-changed', this.chatService.getClients());
       });
     });
@@ -144,6 +142,12 @@ export class ChatGateway implements OnModuleInit {
     // this.chatService.setAvatar(new_avatar);
     // this.server.emit('on-avatars-changed', this.chatService.getAvatars());
     // console.log('set avatar ', new_avatar);
+  }
+
+  @SubscribeMessage('disconnect-all')
+  disconnectAll() {
+    console.log('Desconectando todos los clientes');
+    this.server.disconnectSockets(true);
   }
 
   @SubscribeMessage('send-command')
